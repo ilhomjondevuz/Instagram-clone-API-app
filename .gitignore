@@ -1,0 +1,59 @@
+## Python and Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+## Django Static & Media (Tavsiya etiladi)
+staticfiles/
+/media/
+
+## Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+
+## Environment Variables (Maxfiy kalitlar uchun)
+.env
+.env.local
+.env.*.local
+
+## Database and Local Settings
+*.sqlite3
+*.db
+local_settings.py
+db.sqlite3-journal
+
+## Logs and Cache
+*.log
+local_cache/
+.cache
+.pytest_cache/
+
+## IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

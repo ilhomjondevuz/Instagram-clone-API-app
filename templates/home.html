@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+    Home
+{% endblock title %}
+
+
+{% block content %}
+
+<!-- Slider Section -->
+<section class="slider_section">
+
+    <div
+        id="customCarousel1"
+        class="carousel slide"
+        data-ride="carousel">
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+
+                <div class="container">
+
+                    <div class="row">
+
+
+                        <!-- Text -->
+                        <div class="col-md-6">
+
+                            <div class="detail-box">
+
+                                <h1>
+                                    Instagram clone API
+                                </h1>
+
+
+                                <p>
+                                    Hello, guys! This is a Instagram clone API app.
+                                    You can use this template for your Django projects.
+                                </p>
+
+
+                                <div class="btn-box">
+
+                                    <a
+                                        href="{% url 'admin:index' %}"
+                                        class="btn1">
+
+                                        Sign In
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Image -->
+                        <div class="col-md-6">
+
+                            <div class="img-box">
+
+                                <img
+                                    src="{% static 'images/slider-img.png' %}"
+                                    alt="Instagram clone API app">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- End Slider Section -->
+
+{% endblock content %}

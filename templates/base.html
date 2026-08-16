@@ -1,0 +1,523 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon"
+          href="{% static 'images/favicon.ico' %}"
+          type="image/x-icon">
+
+    <title>
+        {% block title %}
+            Django Template
+        {% endblock title %}
+    </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Owl Carousel -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/font-awesome.min.css' %}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    >
+
+    <!-- Custom CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/responsive.css' %}"
+    >
+
+    {% block extra_css %}
+    {% endblock extra_css %}
+
+</head>
+
+
+<body>
+
+    <!-- Hero Area -->
+    <div class="hero_area">
+
+        <!-- Background -->
+        <div class="hero_bg_box">
+
+            <div class="bg_img_box">
+
+                <img
+                    src="{% static 'images/hero-bg.png' %}"
+                    alt="Hero background"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- Header -->
+        <header class="header_section">
+
+            <div class="container-fluid">
+
+                <nav class="navbar navbar-expand-lg custom_nav-container">
+
+                    <!-- Logo -->
+                    <a class="navbar-brand"
+                       href="{% url 'home' %}">
+
+                        <span>
+                            Instagram clone API app
+                        </span>
+
+                    </a>
+
+
+                    <!-- Mobile Button -->
+                    <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                        <span></span>
+
+                    </button>
+
+
+                    <!-- Navbar -->
+                    <div
+                        class="collapse navbar-collapse"
+                        id="navbarSupportedContent">
+
+                        <ul class="navbar-nav">
+
+                            <!-- Home -->
+                            <li class="nav-item">
+
+                                <a
+                                    class="nav-link"
+                                    href="{% url 'home' %}">
+
+                                    <i
+                                        class="fa fa-home"
+                                        aria-hidden="true">
+                                    </i>
+
+                                    Home
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Admin -->
+                            <li class="nav-item">
+
+                                <a
+                                    class="nav-link"
+                                    href="{% url 'admin:index' %}">
+
+                                    <i
+                                        class="fa fa-user"
+                                        aria-hidden="true">
+                                    </i>
+
+                                    Admin
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Swagger -->
+                            <li class="nav-item">
+
+                                <a
+                                    class="nav-link"
+                                    href="{% url 'swagger' %}">
+
+                                    <i
+                                        class="fas fa-cogs"
+                                        aria-hidden="true">
+                                    </i>
+
+                                    Swagger
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Redoc -->
+                            <li class="nav-item">
+
+                                <a
+                                    class="nav-link"
+                                    href="{% url 'redoc' %}">
+
+                                    <i
+                                        class="fas fa-book"
+                                        aria-hidden="true">
+                                    </i>
+
+                                    Redoc
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Schema -->
+                            <li class="nav-item">
+
+                                <a
+                                    class="nav-link"
+                                    href="{% url 'schema' %}">
+                                    <i class="fas fa-file" aria-hidden="true"></i>
+                                    Schema
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </nav>
+
+            </div>
+
+        </header>
+        <!-- End Header -->
+
+
+        <!-- Page Content -->
+
+        {% block content %}
+        {% endblock content %}
+
+    </div>
+    <!-- End Hero Area -->
+
+
+    <!-- Info Section -->
+    <section class="info_section layout_padding2">
+
+        <div class="container">
+
+            <div class="row">
+
+
+                <!-- Contact -->
+                <div class="col-md-6 col-lg-3 info_col">
+
+                    <div class="info_contact">
+
+                        <h4>
+                            Contacts
+                        </h4>
+
+
+                        <div class="contact_link_box">
+
+                            <a href="#">
+                                <i
+                                    class="fa fa-map-marker"
+                                    aria-hidden="true">
+                                </i>
+
+                                <span>
+                                    Archa mahalla, Orqa ko'cha 1-uy
+                                </span>
+
+                            </a>
+
+
+                            <a href="tel:+998330078587">
+
+                                <i
+                                    class="fa fa-phone"
+                                    aria-hidden="true">
+                                </i>
+
+                                <span>
+                                    +998 33 007 85 87
+                                </span>
+
+                            </a>
+
+
+                            <a href="mailto:jahongir_kh@tiiame.uz">
+
+                                <i
+                                    class="fa fa-envelope"
+                                    aria-hidden="true">
+                                </i>
+
+                                <span>
+                                    jahongir_kh@tiiame.uz
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Social -->
+                    <div class="info_social">
+
+                        <a
+                            href="https://www.facebook.com/ja_khan_gir"
+                            target="_blank">
+
+                            <i
+                                class="fa fa-facebook"
+                                aria-hidden="true">
+                            </i>
+
+                        </a>
+
+
+                        <a
+                            href="https://twitter.com/ja_khan_gir"
+                            target="_blank">
+
+                            <i
+                                class="fa fa-twitter"
+                                aria-hidden="true">
+                            </i>
+
+                        </a>
+
+
+                        <a
+                            href="https://www.linkedin.com/in/jahongir-hakimjonov/"
+                            target="_blank">
+
+                            <i
+                                class="fa fa-linkedin"
+                                aria-hidden="true">
+                            </i>
+
+                        </a>
+
+
+                        <a
+                            href="https://instagram.com/ja_khan_gir"
+                            target="_blank">
+
+                            <i
+                                class="fa fa-instagram"
+                                aria-hidden="true">
+                            </i>
+
+                        </a>
+
+
+                        <a
+                            href="https://github.com/JahongirHakimjonov"
+                            target="_blank">
+
+                            <i
+                                class="fa fa-github"
+                                aria-hidden="true">
+                            </i>
+
+                        </a>
+
+
+                        <a
+                            href="https://t.me/ja_khan_gir"
+                            target="_blank">
+
+                            <i
+                                class="fa fa-telegram"
+                                aria-hidden="true">
+                            </i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Info -->
+                <div class="col-md-6 col-lg-3 info_col">
+
+                    <div class="info_detail">
+
+                        <h4>
+                            Info
+                        </h4>
+
+                        <p>
+                            Hello, guys! This is a Django Template.
+                            You can use this template for your Django projects.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Links -->
+                <div class="col-md-6 col-lg-2 mx-auto info_col">
+
+                    <div class="info_link_box">
+
+                        <h4>
+                            Links
+                        </h4>
+
+
+                        <div class="info_links">
+
+                            <a
+                                href="https://github.com/JahongirHakimjonov"
+                                target="_blank">
+
+                                GitHub
+
+                            </a>
+
+
+                            <a
+                                href="https://t.me/ja_khan_gir"
+                                target="_blank">
+
+                                Telegram
+
+                            </a>
+
+
+                            <a
+                                href="https://instagram.com/ja_khan_gir"
+                                target="_blank">
+
+                                Instagram
+
+                            </a>
+
+
+                            <a
+                                href="https://jahongirhakimjonov.github.io/portfolio/"
+                                target="_blank">
+
+                                Portfolio
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- End Info Section -->
+
+
+    <!-- Footer -->
+    <section class="footer_section">
+
+        <div class="container">
+
+            <p>
+
+                &copy;
+
+                <span id="displayYear"></span>
+
+                All Rights Reserved By
+
+                <a href="{% url 'home' %}">
+                    Django Template
+                </a>
+
+            </p>
+
+        </div>
+
+    </section>
+    <!-- End Footer -->
+
+
+    <!-- jQuery -->
+    <script
+        src="{% static 'js/jquery-3.4.1.min.js' %}">
+    </script>
+
+
+    <!-- Popper -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous">
+    </script>
+
+
+    <!-- Bootstrap -->
+    <script
+        src="{% static 'js/bootstrap.js' %}">
+    </script>
+
+
+    <!-- Owl Carousel -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+    </script>
+
+
+    <!-- Custom JS -->
+    <script
+        src="{% static 'js/custom.js' %}">
+    </script>
+
+
+    {% block extra_js %}
+    {% endblock extra_js %}
+
+</body>
+
+</html>
