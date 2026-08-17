@@ -4,9 +4,10 @@ from django.db import models
 from apps.shared.models import BaseModel
 from apps.post.models import Post, PostComment
 
-FOLLOW, LIKE, COMMENT, COMMENT_LIKE = 'follow', 'like', 'comment', 'comment_like'
+FOLLOW, UN_FOLLOW, LIKE, COMMENT, COMMENT_LIKE = 'follow', 'un_follow', 'like', 'comment', 'comment_like'
 NOTIFICATION_TYPES = (
     (FOLLOW, FOLLOW),
+    (UN_FOLLOW, UN_FOLLOW),
     (LIKE, LIKE),
     (COMMENT, COMMENT_LIKE),
     (COMMENT_LIKE, COMMENT_LIKE),
