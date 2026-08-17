@@ -1,6 +1,7 @@
 from django.core.exceptions import BadRequest
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions, status
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
@@ -215,3 +216,26 @@ class PostCommentDeleteAPIView(generics.DestroyAPIView):
             "success": True,
             "message": "Comment has been deleted.",
         })
+
+class PostCommentRetrieveUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = PostCommentSerializer
+    queryset = PostComment.objects.all()
+
+    lookup_field = 'pk'
+    lookup_url_kwarg = 'comment_id'
+
+    def perform_update(self, serializer):
+        comment = get_object_or_404(
+            PostComment,
+            pk=self.kwargs['comment_id'],
+            author=self.request.user
+        )
+
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        if instance.author != self.request.user:
+            raise PermissionDenied("You are not the author of this comment.")
+
+        instance.delete()
