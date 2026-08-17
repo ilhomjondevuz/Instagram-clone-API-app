@@ -1,5 +1,4 @@
 from django.urls import path
-from rest_framework.views import APIView
 
 from .views import SignupAPIView, VerifyAPIView, GetNewVerifyAPIView, ChangeUserInformationAPIView, \
     ChangeUserAvatarAPIView, CustomLoginAPIView, LoginRefreshAPIView, LogoutAPIView, ForgotPasswordAPIView, \
