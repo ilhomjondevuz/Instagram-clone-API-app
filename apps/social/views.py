@@ -1,9 +1,12 @@
+from django.db.models import Q
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
 from apps.accounts.models import User
 from apps.accounts.serializers import OtherUserSerializer
 from apps.notification.models import Notification, FOLLOW, UN_FOLLOW
+from apps.post.serializers import PostSerializer
+from apps.post.models import Post
 from .models import Follow
 from .serializers import FollowSerializer
 
@@ -79,3 +82,19 @@ class GetOtherAPIView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = OtherUserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class HomeAPIView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        following_users = self.request.user.following.values_list(
+            'following_id',
+            flat=True
+        )
+        print(following_users)
+
+        return Post.objects.filter(
+            Q(author_id__in=following_users) |
+            Q(author=self.request.user)
+        )
