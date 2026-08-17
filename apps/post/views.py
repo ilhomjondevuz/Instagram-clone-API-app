@@ -209,7 +209,7 @@ class PostCommentDeleteAPIView(generics.DestroyAPIView):  # xatolik bor
 
     def delete(self, request, *args, **kwargs):
         comment_id = self.kwargs['comment_id']
-        comment = get_object_or_404(PostComment, pk=comment_id, author=self.request.user)
+        comment = get_object_or_404(PostComment.objects.all(), pk=comment_id, author=self.request.user)
         comment.delete()
         return Response({
             "success": True,
