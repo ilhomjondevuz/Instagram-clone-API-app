@@ -409,3 +409,24 @@ class UserSerializer(serializers.ModelSerializer):
             'auth_status',
             'role'
         ]
+
+class OtherUserSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'phone_number',
+            'bio',
+            'avatar',
+            'gender',
+        ]
+        read_only_fields = [
+            'id',
+            'username',
+        ]

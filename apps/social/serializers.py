@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.accounts.serializers import UserSerializer
+from apps.accounts.serializers import OtherUserSerializer
 from .models import Follow
 
 
@@ -26,8 +26,8 @@ class FollowSerializer(serializers.ModelSerializer):
             'created_at',
         )
 
-    def get_following_owner(self, instance) -> UserSerializer:
-        return UserSerializer(instance.follower).data
+    def get_following_owner(self, instance) -> OtherUserSerializer:
+        return OtherUserSerializer(instance.follower).data
 
-    def get_follower_owner(self, instance) -> UserSerializer:
-        return UserSerializer(instance.following).data
+    def get_follower_owner(self, instance) -> OtherUserSerializer:
+        return OtherUserSerializer(instance.following).data

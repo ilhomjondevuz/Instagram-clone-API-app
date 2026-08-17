@@ -1,6 +1,8 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
+from apps.accounts.models import User
+from apps.accounts.serializers import OtherUserSerializer
 from apps.notification.models import Notification, FOLLOW, UN_FOLLOW
 from .models import Follow
 from .serializers import FollowSerializer
@@ -72,3 +74,8 @@ class FollowersListAPIView(generics.ListAPIView):
     def get_queryset(self):
         follower = self.request.user
         return follower.followers.all()
+
+class GetOtherAPIView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = OtherUserSerializer
+    permission_classes = [permissions.IsAuthenticated]
