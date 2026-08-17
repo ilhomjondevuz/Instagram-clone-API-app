@@ -14,7 +14,7 @@ from apps.shared.utility import send_email, check_auth_type
 from .models import CODE_VERIFIED, NEW, UserConfirmation, VIA_EMAIL, VIA_PHONE_NUMBER, User
 from .serializers import SignupSerializer, VerifySerializer, VerifyResponseSerializer, ChangeUserInformationSerializer, \
     ChangeUserAvatarSerializer, LoginSerializer, LoginRefreshSerializer, LoginResponseSerializer, LogoutSerializer, \
-    ForgotPasswordSerializer, ResetPasswordSerializer, GetMeSerializer
+    ForgotPasswordSerializer, ResetPasswordSerializer, UserSerializer
 
 
 class SignupAPIView(APIView):
@@ -376,8 +376,36 @@ class ResetPasswordAPIView(APIView):
 
 class GetMeGenericAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = GetMeSerializer
+    serializer_class = UserSerializer
 
     def get_object(self):
         request = self.request
         return request.user
+
+class ChangeUserAPIView(generics.UpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+
+    def get_object(self):
+        return self.request.user
+
+    @swagger_auto_schema(
+        request_body=UserSerializer,
+        responses={
+            200: openapi.Response(
+                description="Change user details",
+                schema=UserSerializer
+            )
+        }
+    )
+    def update(self, request,  *args, **kwargs):
+        serializer = self.serializer_class(instance=request.user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        data = {
+            "success": True,
+            "message": "Change user details successful",
+            "data": serializer.data
+        }
+        return Response(data, status=status.HTTP_200_OK)

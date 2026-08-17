@@ -383,7 +383,7 @@ class ResetPasswordSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-class GetMeSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
 
     class Meta:
@@ -402,4 +402,10 @@ class GetMeSerializer(serializers.ModelSerializer):
             'auth_type',
             'auth_status',
         ]
-        read_only_fields = fields
+        read_only_fields = [
+            'id',
+            'username',
+            'auth_type',
+            'auth_status',
+            'role'
+        ]

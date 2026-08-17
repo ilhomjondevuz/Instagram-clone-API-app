@@ -1,8 +1,9 @@
 from django.urls import path
+from rest_framework.views import APIView
 
 from .views import SignupAPIView, VerifyAPIView, GetNewVerifyAPIView, ChangeUserInformationAPIView, \
     ChangeUserAvatarAPIView, CustomLoginAPIView, LoginRefreshAPIView, LogoutAPIView, ForgotPasswordAPIView, \
-    ResetPasswordAPIView, GetMeGenericAPIView
+    ResetPasswordAPIView, GetMeGenericAPIView, ChangeUserAPIView
 
 urlpatterns = [
     path('signup/', SignupAPIView.as_view(), name='signup'),
@@ -18,4 +19,5 @@ urlpatterns = [
     path('reset-password/', ResetPasswordAPIView.as_view(), name='reset_password'),
 
     path('get-me/', GetMeGenericAPIView.as_view(), name='get_me'),
+    path('update/', ChangeUserAPIView.as_view(), name='update_user'),
 ]
