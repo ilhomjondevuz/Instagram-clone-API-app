@@ -202,7 +202,7 @@ class PostCommentUpdateAPIView(generics.UpdateAPIView):
             'comment': "User not authorized to update comment.",
         })
 
-class PostCommentDeleteAPIView(generics.DestroyAPIView):  # xatolik bor
+class PostCommentDeleteAPIView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PostCommentSerializer
     queryset = PostComment.objects.all()
