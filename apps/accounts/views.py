@@ -1,10 +1,8 @@
 from django.utils import timezone
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from pip._internal import req
-from rest_framework import permissions, status, serializers
+from rest_framework import permissions, status, serializers, generics
 from rest_framework.exceptions import NotFound
-from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,7 +14,7 @@ from apps.shared.utility import send_email, check_auth_type
 from .models import CODE_VERIFIED, NEW, UserConfirmation, VIA_EMAIL, VIA_PHONE_NUMBER, User
 from .serializers import SignupSerializer, VerifySerializer, VerifyResponseSerializer, ChangeUserInformationSerializer, \
     ChangeUserAvatarSerializer, LoginSerializer, LoginRefreshSerializer, LoginResponseSerializer, LogoutSerializer, \
-    ForgotPasswordSerializer, ResetPasswordSerializer
+    ForgotPasswordSerializer, ResetPasswordSerializer, GetMeSerializer
 
 
 class SignupAPIView(APIView):
@@ -273,6 +271,7 @@ class CustomLoginAPIView(APIView):
         tokens = user.tokens()
         tokens.update({
             'message': 'Login successful',
+            'username': user.username,
         })
         return Response(tokens, status=status.HTTP_200_OK)
 
@@ -374,3 +373,11 @@ class ResetPasswordAPIView(APIView):
             "username": request.user.username,
         }
         return Response(data, status=status.HTTP_200_OK)
+
+class GetMeGenericAPIView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = GetMeSerializer
+
+    def get_object(self):
+        request = self.request
+        return request.user

@@ -263,8 +263,7 @@ class LoginSerializer(serializers.Serializer):
                 raise serializers.ValidationError({
                     'user_input': 'Phone number not found'
                 })
-
-            if not (user_obj.auth_type == PHOTO_DONE or user_obj.auth_status == DONE):  # auth_type (photo_done yoki done) da bo'lmasa
+            if not (user_obj.auth_status == PHOTO_DONE or user_obj.auth_status == DONE):
                 raise serializers.ValidationError({
                     'auth_type': 'Not full registration'
                 })
@@ -383,3 +382,24 @@ class ResetPasswordSerializer(serializers.Serializer):
         instance.set_password(password)
         instance.save()
         return instance
+
+class GetMeSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'phone_number',
+            'bio',
+            'avatar',
+            'gender',
+            'role',
+            'auth_type',
+            'auth_status',
+        ]
+        read_only_fields = fields
