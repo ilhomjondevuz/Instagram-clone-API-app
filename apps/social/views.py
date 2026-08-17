@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
-from notification.models import Notification, FOLLOW, UN_FOLLOW
+from apps.notification.models import Notification, FOLLOW, UN_FOLLOW
 from .models import Follow
 from .serializers import FollowSerializer
 
