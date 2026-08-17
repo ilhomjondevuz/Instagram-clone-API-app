@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'apps.home.apps.HomeConfig',
     'apps.shared.apps.SharedConfig',
     'apps.post.apps.PostConfig',
+    'apps.social.apps.SocialConfig',
+    'apps.notification.apps.NotificationConfig',
 ]
 
 MIDDLEWARE = [
