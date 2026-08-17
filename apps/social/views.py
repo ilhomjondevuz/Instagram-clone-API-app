@@ -54,3 +54,12 @@ class FollowAPIView(generics.CreateAPIView):
             'message': 'Follow successful.',
             'is_following': True,
         }, status=status.HTTP_201_CREATED)
+
+class FollowingListAPIView(generics.ListAPIView):
+    queryset = Follow.objects.all()
+    serializer_class = FollowSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        follower = self.request.user
+        return Follow.objects.filter(follower=follower)
