@@ -20,6 +20,6 @@ urlpatterns = [
 
     path('<uuid:pk>/likes/', PostLikeListAPIView.as_view(), name='likes'),  # post likes ro'yxati!
     path('<uuid:pk>/toggle-like/', PostToggleLikeAPIView.as_view(), name='toggle-like'),  # post like bosish yoki o'chirish
-    path('comments/<uuid:comment_id>/likes/', PostCommentLikeListAPIView.as_view(), name='comment-likes'),
-    path('comments/<uuid:comment_id>/toggle-like/', PostCommentToggleLikeAPIView.as_view(), name='toggle-comment-like'),
+    path('comments/<uuid:comment_id>/likes/', PostCommentLikeListAPIView.as_view(), name='comment-likes'),  # comment likes list
+    path('comments/<uuid:comment_id>/toggle-like/', PostCommentToggleLikeAPIView.as_view(), name='toggle-comment-like'),  # comment like create delete
 ]
