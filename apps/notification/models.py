@@ -4,7 +4,7 @@ from django.db import models
 from apps.shared.models import BaseModel
 from apps.post.models import Post, PostComment
 
-FOLLOW, UN_FOLLOW, POST_LIKE, POST_UNLIKE, COMMENT, COMMENT_LIKE = 'follow', 'un_follow', 'post_like', 'post_unlike', 'comment', 'comment_like'
+FOLLOW, UN_FOLLOW, POST_LIKE, POST_UNLIKE, COMMENT, COMMENT_LIKE, COMMENT_UNLIKE = 'follow', 'un_follow', 'post_like', 'post_unlike', 'comment', 'comment_like', 'comment_unlike'
 NOTIFICATION_TYPES = (
     (FOLLOW, FOLLOW),
     (UN_FOLLOW, UN_FOLLOW),
@@ -12,12 +12,13 @@ NOTIFICATION_TYPES = (
     (POST_UNLIKE, POST_UNLIKE),
     (COMMENT, COMMENT),
     (COMMENT_LIKE, COMMENT_LIKE),
+    (COMMENT_UNLIKE, COMMENT_UNLIKE),
 )
 
 User = get_user_model()
 
 class Notification(BaseModel):
-    notification_type = models.CharField(max_length=12, choices=NOTIFICATION_TYPES)
+    notification_type = models.CharField(max_length=14, choices=NOTIFICATION_TYPES)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_notifications')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)

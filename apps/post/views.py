@@ -6,7 +6,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from apps.shared.custom_pagination import CustomPagination
-from apps.notification.models import Notification, POST_UNLIKE, POST_LIKE
+from apps.notification.models import Notification, POST_UNLIKE, POST_LIKE, COMMENT_UNLIKE, COMMENT_LIKE
 from .models import Post, PostComment, PostLike, CommentLike
 from .serializers import PostSerializer, PostCommentSerializer, PostLikeSerializer, CommentLikeSerializer
 
@@ -153,6 +153,12 @@ class PostCommentToggleLikeAPIView(generics.GenericAPIView):
 
         if like:
             like.delete()
+            Notification.objects.update_or_create(
+                notification_type=COMMENT_UNLIKE,
+                recipient=comment.author,
+                author=request.user,
+                comment=comment
+            )
 
             return Response(
                 {
@@ -166,6 +172,13 @@ class PostCommentToggleLikeAPIView(generics.GenericAPIView):
         like = CommentLike.objects.create(
             comment=comment,
             author=request.user
+        )
+
+        Notification.objects.update_or_create(
+            notification_type=COMMENT_LIKE,
+            recipient=comment.author,
+            author=request.user,
+            comment=comment
         )
 
         return Response(
