@@ -56,3 +56,34 @@ class MyListUnReadNotificationAPIView(APIView):
             'data': self.serializer_class(all_notifications, many=True).data
         }
         return Response(data=resp_data, status=status.HTTP_200_OK)
+
+class ReadNotificationAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = NotificationSerializer
+
+    def put(self, request, pk, *args, **kwargs):
+        try:
+            notification = Notification.objects.get(
+                pk=pk,
+                recipient=request.user,
+                is_read=False,
+            )
+        except Notification.DoesNotExist:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Notification not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        notification.is_read = True
+        notification.save(update_fields=["is_read"])
+
+        return Response(
+            {
+                "success": True,
+                "message": "Notification marked as read.",
+            },
+            status=status.HTTP_200_OK,
+        )

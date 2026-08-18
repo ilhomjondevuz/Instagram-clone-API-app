@@ -1,6 +1,5 @@
 from django.utils import timezone
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 from rest_framework import permissions, status, serializers, generics
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
@@ -18,22 +17,25 @@ from .serializers import SignupSerializer, VerifySerializer, VerifyResponseSeria
 
 
 class SignupAPIView(APIView):
-
     permission_classes = [
         permissions.AllowAny
     ]
 
     serializer_class = SignupSerializer
 
-    @swagger_auto_schema(
-        request_body=SignupSerializer,
+    @extend_schema(
+        request=SignupSerializer,
         responses={
-            201: "User created successfully",
-            400: "Bad request",
-        }
+            201: OpenApiResponse(
+                response=SignupSerializer,
+                description="User created successfully",
+            ),
+            400: OpenApiResponse(
+                description="Bad request",
+            ),
+        },
     )
     def post(self, request):
-
         serializer = self.serializer_class(
             data=request.data
         )
@@ -54,15 +56,14 @@ class VerifyAPIView(APIView):
         permissions.IsAuthenticated
     ]
 
-    @swagger_auto_schema(
-        request_body=VerifySerializer,
+    @extend_schema(
+        request=VerifySerializer,
         responses={
-            200: openapi.Response(
-                description="Verification successful",
-                schema=VerifyResponseSerializer
+            200: VerifyResponseSerializer,
+            400: OpenApiResponse(
+                description="Invalid verification code",
             ),
-            400: "Invalid verification code",
-        }
+        },
     )
     def post(self, request):
         user = request.user
@@ -110,13 +111,13 @@ class GetNewVerifyAPIView(APIView):
     permission_classes = [
         permissions.IsAuthenticated
     ]
-    @swagger_auto_schema(
+
+    @extend_schema(
+        summary="Get new verification code",
+        request=None,
         responses={
-            200: openapi.Response(
-                succes=True,
-                description="Verification successful",
-            )
-        }
+            200: VerifyResponseSerializer,
+        },
     )
     def get(self, request):
         if self.is_none_check_verify_code(request.user):
@@ -160,14 +161,15 @@ class ChangeUserInformationAPIView(APIView):
     ]
     serializer_class = ChangeUserInformationSerializer
     http_method_names = ['post']
-    @swagger_auto_schema(
-        request_body=ChangeUserInformationSerializer,
+
+    @extend_schema(
+        request=ChangeUserInformationSerializer,
         responses={
-            200: openapi.Response(
+            200: OpenApiResponse(
+                response=ChangeUserInformationSerializer,
                 description="Change user info",
-                schema=ChangeUserInformationSerializer
-            )
-        }
+            ),
+        },
     )
     def post(self, request):
         serializer = self.serializer_class(instance=request.user, data=request.data)
@@ -192,14 +194,14 @@ class ChangeUserAvatarAPIView(APIView):
 
     serializer_class = ChangeUserAvatarSerializer
 
-    @swagger_auto_schema(
-        request_body=ChangeUserAvatarSerializer,
+    @extend_schema(
+        request=ChangeUserAvatarSerializer,
         responses={
-            200: openapi.Response(
+            200: OpenApiResponse(
+                response=ChangeUserAvatarSerializer,
                 description="Change user avatar",
-                schema=ChangeUserAvatarSerializer
-            )
-        }
+            ),
+        },
     )
     def put(self, request):
         serializer = self.serializer_class(
@@ -220,14 +222,14 @@ class ChangeUserAvatarAPIView(APIView):
             status=status.HTTP_200_OK
         )
 
-    @swagger_auto_schema(
-        request_body=ChangeUserAvatarSerializer,
+    @extend_schema(
+        request=ChangeUserAvatarSerializer,
         responses={
-            200: openapi.Response(
+            200: OpenApiResponse(
+                response=ChangeUserAvatarSerializer,
                 description="Change user avatar",
-                schema=ChangeUserAvatarSerializer
-            )
-        }
+            ),
+        },
     )
     def patch(self, request):
         serializer = self.serializer_class(
@@ -255,12 +257,12 @@ class CustomLoginAPIView(APIView):
     ]
     serializer_class = LoginSerializer
     http_method_names = ['post']
-    @swagger_auto_schema(
-        request_body=LoginSerializer,
+    @extend_schema(
+        request=LoginSerializer,
         responses={
-            200: openapi.Response(
+            200: OpenApiResponse(
                 description="Login successful",
-                schema=LoginResponseSerializer
+                response=LoginResponseSerializer
             )
         }
     )
@@ -283,10 +285,10 @@ class LogoutAPIView(APIView):
         permissions.IsAuthenticated
     ]
     serializer_class = LogoutSerializer
-    @swagger_auto_schema(
-        request_body=LogoutSerializer,
+    @extend_schema(
+        request=LogoutSerializer,
         responses={
-            200: openapi.Response(
+            200: OpenApiResponse(
                 description="Logout successful",
             )
         }
@@ -309,12 +311,12 @@ class LogoutAPIView(APIView):
 class ForgotPasswordAPIView(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = ForgotPasswordSerializer
-    @swagger_auto_schema(
-        request_body=ForgotPasswordSerializer,
+    @extend_schema(
+        request=ForgotPasswordSerializer,
         responses={
-            200: openapi.Response(
+            200: OpenApiResponse(
                 description="Forgot password successful",
-                schema=ForgotPasswordSerializer
+                response=ForgotPasswordSerializer
             )
         }
     )
@@ -353,12 +355,12 @@ class ForgotPasswordAPIView(APIView):
 class ResetPasswordAPIView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ResetPasswordSerializer
-    @swagger_auto_schema(
-        request_body=ResetPasswordSerializer,
+    @extend_schema(
+        request=ResetPasswordSerializer,
         responses={
-            200: openapi.Response(
+            200: OpenApiResponse(
                 description="Reset password successful",
-                schema=ResetPasswordSerializer
+                response=ResetPasswordSerializer
             )
         }
     )
@@ -390,12 +392,12 @@ class ChangeUserAPIView(generics.UpdateAPIView):
     def get_object(self):
         return self.request.user
 
-    @swagger_auto_schema(
-        request_body=UserSerializer,
+    @extend_schema(
+        request=UserSerializer,
         responses={
-            200: openapi.Response(
+            200: OpenApiResponse(
                 description="Change user details",
-                schema=UserSerializer
+                response=UserSerializer
             )
         }
     )

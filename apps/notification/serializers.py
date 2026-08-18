@@ -24,3 +24,11 @@ class NotificationSerializer(serializers.ModelSerializer):
             'is_read',
             'created_at'
         ]
+
+    def update(self, instance, validated_data):
+        if instance.is_read:
+            instance.is_read = False
+        else:
+            instance.is_read = True
+        instance.save()
+        return instance

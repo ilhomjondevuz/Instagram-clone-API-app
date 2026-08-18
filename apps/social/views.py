@@ -31,7 +31,7 @@ class FollowAPIView(generics.CreateAPIView):
         if follow:
             follow.delete()
 
-            Notification.objects.create(
+            Notification.objects.update_or_create(
                 recipient=following,
                 author=follower,
                 notification_type=UN_FOLLOW,
@@ -43,7 +43,7 @@ class FollowAPIView(generics.CreateAPIView):
                 'is_following': False,
             })
 
-        Follow.objects.create(
+        Follow.objects.update_or_create(
             follower=follower,
             following=following,
         )
@@ -92,7 +92,6 @@ class HomeAPIView(generics.ListAPIView):
             'following_id',
             flat=True
         )
-        print(following_users)
 
         return Post.objects.filter(
             Q(author_id__in=following_users) |

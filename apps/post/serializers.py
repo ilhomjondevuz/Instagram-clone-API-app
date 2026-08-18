@@ -1,23 +1,9 @@
 from rest_framework import serializers
 from rest_framework.utils.serializer_helpers import ReturnDict
 
-from apps.accounts.models import User
+from apps.accounts.serializers import UserSerializer
 from apps.notification.models import Notification, COMMENT
 from .models import Post, PostComment, CommentLike, PostLike
-
-
-class UserSerializer(serializers.ModelSerializer):
-    avatar = serializers.ImageField(read_only=True)
-
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'username',
-            'avatar',
-            'first_name',
-            'last_name',
-        )
 
 
 class PostCommentSerializer(serializers.ModelSerializer):
