@@ -18,6 +18,7 @@ urlpatterns = [
     path('api/accounts/', include('apps.accounts.urls')),
     path('api/posts/', include('apps.post.urls')),
     path('api/social/', include('apps.social.urls')),
+    path('api/notifications/', include('apps.notification.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
