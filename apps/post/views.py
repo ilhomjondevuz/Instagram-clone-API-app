@@ -6,6 +6,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from apps.shared.custom_pagination import CustomPagination
+from apps.notification.models import Notification, POST_UNLIKE, POST_LIKE
 from .models import Post, PostComment, PostLike, CommentLike
 from .serializers import PostSerializer, PostCommentSerializer, PostLikeSerializer, CommentLikeSerializer
 
@@ -97,12 +98,24 @@ class PostToggleLikeAPIView(generics.GenericAPIView):
         like = PostLike.objects.filter(post=post, author=self.request.user).first()
         if like:
             like.delete()
+            Notification.objects.update_or_create(
+                notification_type=POST_UNLIKE,
+                recipient=post.author,
+                author=self.request.user,
+                post=post
+            )
             return Response({
                 "success": True,
                 "message": f"Post {post.caption} has been Post unliked.",
                 'liked': False,
             }, status=status.HTTP_200_OK)
         PostLike.objects.create(post=post, author=self.request.user)
+        Notification.objects.update_or_create(
+            notification_type=POST_LIKE,
+            recipient=post.author,
+            author=self.request.user,
+            post=post
+        )
         return Response({
             "success": True,
             "message": f"Post {post.caption} has been Post liked.",
