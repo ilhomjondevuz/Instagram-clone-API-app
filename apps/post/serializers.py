@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.utils.serializer_helpers import ReturnDict
 
 from apps.accounts.models import User
+from apps.notification.models import Notification, COMMENT
 from .models import Post, PostComment, CommentLike, PostLike
 
 
@@ -40,10 +41,24 @@ class PostCommentSerializer(serializers.ModelSerializer):
             'likes_count',
         )
 
+    def create(self, validated_data):
+        request = self.context.get('request', None)
+        comment = PostComment.objects.create(**validated_data)
+        # comment = super().create({
+        #     **validated_data,
+        #     'author': request.user,
+        # })
+        Notification.objects.create(
+            notification_type=COMMENT,
+            recipient=comment.author,
+            author=request.user,
+        )
+        return comment
+
     def get_me_liked(self, obj) -> bool:
         request = self.context.get('request')
 
-        if request and request.user.is_authenticated:
+        if request:
             return obj.comment_likes.filter(
                 author=request.user
             ).exists()
