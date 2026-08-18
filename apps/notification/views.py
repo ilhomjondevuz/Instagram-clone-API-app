@@ -87,3 +87,28 @@ class ReadNotificationAPIView(APIView):
             },
             status=status.HTTP_200_OK,
         )
+
+class ReadingUnreadNotificationsAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            notifications = Notification.objects.filter(
+                recipient=self.request.user,
+                is_read=False
+            )
+        except Notification.DoesNotExist:
+            return Response(
+                {
+                    "success": False,
+                    "message": "UnreadNotifications not found.",
+                }
+            )
+        else:
+            notifications.update(is_read=True)
+            return Response(
+                {
+                    "success": True,
+                    "message": "Notification marked as read.",
+                }
+            )
