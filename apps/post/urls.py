@@ -1,10 +1,9 @@
 from django.urls import path
-from rest_framework.views import APIView
 
 from .views import PostListAPIView, PostCreateAPIView, PostRetrieveUpdateDestroyAPIView, PostCommentListAPIView, \
     PostCommentCreateAPIView, PostLikeListAPIView, PostToggleLikeAPIView, PostCommentLikeListAPIView, \
     PostCommentToggleLikeAPIView, PostCommentRetrieveAPIView, PostCommentUpdateAPIView, PostCommentDeleteAPIView, \
-    PostCommentRetrieveUpdateDeleteAPIView
+    PostCommentRetrieveUpdateDeleteAPIView, PostSearchAPIVIew
 
 urlpatterns = [
     path('all/', PostListAPIView.as_view(), name='all_posts'),
@@ -22,4 +21,6 @@ urlpatterns = [
     path('<uuid:pk>/toggle-like/', PostToggleLikeAPIView.as_view(), name='toggle-like'),  # post like bosish yoki o'chirish
     path('comments/<uuid:comment_id>/likes/', PostCommentLikeListAPIView.as_view(), name='comment-likes'),  # comment likes list
     path('comments/<uuid:comment_id>/toggle-like/', PostCommentToggleLikeAPIView.as_view(), name='toggle-comment-like'),  # comment like create delete
+
+    path('search/', PostSearchAPIVIew.as_view(), name='search'),
 ]
