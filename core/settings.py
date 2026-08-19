@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'apps.post.apps.PostConfig',
     'apps.social.apps.SocialConfig',
     'apps.notification.apps.NotificationConfig',
+    'apps.savedpost.apps.SavedpostConfig',
 ]
 
 MIDDLEWARE = [
