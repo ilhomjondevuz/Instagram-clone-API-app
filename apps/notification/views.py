@@ -90,6 +90,7 @@ class ReadNotificationAPIView(APIView):
 
 class ReadingUnreadNotificationsAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = NotificationSerializer
 
     def post(self, request, *args, **kwargs):
         try:
