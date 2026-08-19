@@ -1,4 +1,5 @@
 from django.core.exceptions import BadRequest
+from django.db.models import Q
 from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import PermissionDenied
@@ -265,3 +266,15 @@ class PostCommentRetrieveUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIVi
             raise PermissionDenied("You are not the author of this comment.")
 
         instance.delete()
+
+class PostSearchAPIVIew(generics.ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        query = self.request.query_params.get('search', "").strip()
+        if not query:
+            return Post.objects.none()
+        return Post.objects.filter(
+            Q(caption__icontains=query) | Q(author__username__icontains=query)
+        ).distinct()
