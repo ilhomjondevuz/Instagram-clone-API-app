@@ -44,7 +44,7 @@ class PostCommentSerializer(serializers.ModelSerializer):
     def get_me_liked(self, obj) -> bool:
         request = self.context.get('request')
 
-        if request:
+        if request and request.user.is_authenticated:
             return obj.comment_likes.filter(
                 author=request.user
             ).exists()
